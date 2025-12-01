@@ -18,6 +18,7 @@
 ### 2.1 Data Pipeline
 * **Source:** 한국투자증권(KIS) Open API
 * **Data Spec:** 09:00 ~ 10:00 구간의 **30초 간격 고빈도 시계열 데이터(High-frequency Time Series)**
+* **Data Duration:** 2025.08.04 ~ 2025.11.28
 * **Process:** 실시간 스냅샷 수집 → 결측치 처리 → 파생변수 생성 → **CSV 파일 적재**
 
 ### 2.2 Feature Engineering (Signal Thresholds)
