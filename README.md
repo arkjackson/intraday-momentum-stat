@@ -40,11 +40,11 @@
 - **Volume Ratio:** 당일 시간별 누적거래량 / 과거 20일 이동평균 거래량 (Top 25% 사용)
 
 ### 2.3 Feature Engineering (Signal Thresholds)
-| Threshold Type | Definition | Applied Scenario |
-| :--- | :--- | :--- |
-| **A. Static Threshold** (전체 시간 기준) | 09:00~10:00 **전체 분포**의 Top 25% (Q3) | 09:01 ~ 09:59 (Full Range) |
-| **B. Dynamic Threshold** (시간별 기준) | **각 분(Minute)별 과거 분포**의 Top 25% (Q3) | 09:01~09:05, 09:05~09:10 등 |
-| **Volume Ratio** | 20일 이동평균 대비 거래량 비율 (Top 25%) | 공통 적용 |
+| Threshold Type | Definition | Applied Scenario             |
+| :--- | :--- |:-----------------------------|
+| **A. Static Threshold** (전체 시간 기준) | 09:00~10:00 **전체 분포**의 Top 25% (Q3) | 09:01\~ 09:59 (Full Range)   |
+| **B. Dynamic Threshold** (시간별 기준) | **각 분(Minute)별 과거 분포**의 Top 25% (Q3) | 09:01\~09:05, 09:05\~09:10 등 |
+| **Volume Ratio** | 20일 이동평균 대비 거래량 비율 (Top 25%) | 공통 적용                        |
 
 > **Note:** 장 초반(09:00)의 거래량은 평소보다 압도적으로 많기 때문에, 시간대별 특성을 반영하기 위해 **Dynamic Threshold**를 별도로 고안했습니다.
 
@@ -52,7 +52,7 @@
 - **Backtest Period:** 2025.09.01 ~ 2025.11.28  
 - **Factors (Ablation):**
   1) **Signal Logic:** Static Quantile vs Dynamic Quantile  
-  2) **Time Window:** 09:01~09:59 / 09:01~09:05 / 09:01~09:10 / 09:05~09:10  
+  2) **Time Window:** 09:01\~09:59, 09:01\~09:05, 09:01\~09:10, 09:05\~09:10  
   3) **Exit Strategy:** Fixed TP/SL, Time-cut Mix, Full Time-cut  
 
 ---
