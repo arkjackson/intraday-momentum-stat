@@ -1,8 +1,8 @@
-from config.backtest_config import SellStrategy, BacktestConfig
+from config.backtest_config import BacktestConfig
 from functools import lru_cache
-import os, glob
 from loguru import logger
 import pandas as pd
+import os, glob
 
 @lru_cache(maxsize=BacktestConfig.CACHE_SIZE)
 def load_stock_file_cached(stock_code: str, directory_path: str):
