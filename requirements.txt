@@ -1,0 +1,4 @@
+finance-datareader==0.9.96
+loguru==0.7.3
+numpy==1.23.0
+pandas==2.3.1
