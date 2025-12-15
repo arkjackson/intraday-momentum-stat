@@ -33,22 +33,22 @@
 * **Source:** 한국투자증권(KIS) Open API
 * **Data Spec:** 09:00 ~ 10:00 구간의 **30초 간격 고빈도 시계열 데이터(High-frequency Time Series)**
 * **Data Duration:** 2025.08.04 ~ 2025.11.28
-* **Process:** 실시간 스냅샷 수집 → 결측치 처리 → 파생변수 생성 → **CSV 파일 적재**
+* **Process:** 실시간 스냅샷 수집 → 파생변수 생성 → **CSV 파일 적재**
 
-### 2.2 Feature Engineering (Signal Thresholds)
+### 2.2 Feature Engineering
 본 연구는 “의미있는 수급”을 포착하기 위해 아래 지표를 사용했다.
 
 - **Strength (체결강도):** 총매수량 / 총매도량
 - **Volume Ratio:** 당일 시간별 누적거래량 / 과거 20일 이동평균 거래량 (Top 25% 사용)
 
-### 2.3 Feature Engineering (Signal Thresholds)
+### 2.3 Signal Thresholds
 | Threshold Type | Definition | Applied Scenario             |
 | :--- | :--- |:-----------------------------|
-| **A. Static Threshold** (전체 시간 기준) | 09:00~10:00 **전체 분포**의 Top 25% (Q3) | 09:01\~ 09:59 (Full Range)   |
-| **B. Dynamic Threshold** (시간별 기준) | **각 분(Minute)별 과거 분포**의 Top 25% (Q3) | 09:01\~09:05, 09:05\~09:10 등 |
+| **A. Static Threshold** (Strength) | 09:00~10:00 **전체 분포**의 Top 25% (Q3) | 09:01\~ 09:59 (Full Range)   |
+| **B. Dynamic Threshold** (Strength) | **각 분(Minute)별 과거 분포**의 Top 25% (Q3) | 09:01\~09:05, 09:05\~09:10 등 |
 | **Volume Ratio** | 20일 이동평균 대비 거래량 비율 (Top 25%) | 공통 적용                        |
 
-> **Note:** 장 초반(09:00)의 거래량은 평소보다 압도적으로 많기 때문에, 시간대별 특성을 반영하기 위해 **Dynamic Threshold**를 별도로 고안했다.
+> **Note:** 장 초반(09:00)의 거래량은 평소보다 압도적으로 많기 때문에, 시간대별 특성을 반영하기 위해 **Dynamic Threshold**를 별도로 고안.
 
 ### 2.4 Experimental Design
 - **Backtest Period:** 2025.09.01 ~ 2025.11.28  
@@ -64,7 +64,7 @@
 - **Universe:** 전일 대비 +5% 이상 상승 종목군
 - **Execution:** 체결강도, 거래량 비율 시그널 만족시 진입
 - **Transaction Costs:** 0.18%
-- **Data Leakage Control:** Dynamic threshold 계산 시 **과거 데이터만 사용** 
+- **Data Leakage Control:** Signal threshold 계산 시 **과거 데이터만 사용** 
 - **Survivorship Bias:** 시가총액 상위 200 종목
 
 ---
@@ -76,7 +76,7 @@
 
 Dynamic Threshold를 적용하여 **09:05 이전**에 진입했을 때 가장 안정적인 성과(Sharpe 3.44)를 보였다.
 
-| Time Window | Threshold Type | Return (%) | MDD (%) | Sharpe | Avg Tickers | Note |
+| Time Window | Strength Threshold Type | Return (%) | MDD (%) | Sharpe | Avg Tickers | Note |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
 | **09:01 ~ 09:05** | **Dynamic** | 4.40 | **-1.05** | **3.44** | 5.13 | **Best Stability** |
 | 09:01 ~ 09:59 | Static | **5.18** | -1.22 | 3.30 | 7.74 | Highest Return |
